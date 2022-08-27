@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Criar ou editar o arquivo config.json do projeto iris.">
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/LeonardoConstantino/tomenota/main/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css" data-tema>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,0" />
+    <style>
+        input[type="text"] {
+            width: 100%;
+        }
+
+        fieldset {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .display-none {
+            display: none;
+        }
+
+        button, label{
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: .5em;
+        }
+    </style>
+    <title>Editar config.json</title>
+</head>
+
+<body>
+    <header>
+        <form id="theme-form">
+            <fieldset>
+                <legend>theme</legend>
+                <div>
+                    <label>
+                        <input type="radio" value="dark" name="theme" checked>
+                        Dark theme
+                        <i class="material-symbols-outlined"> dark_mode </i>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="radio" value="light" name="theme">
+                        Light theme
+                        <i class="material-symbols-outlined"> light_mode </i>
+                    </label>
+                </div>
+            </fieldset>
+        </form>
+        <h3 dir="auto">CONFIGURAÇÕES DE USUÁRIO - CONFIG.JSON</h3>
+        <button data-btn="comecar">
+            Editar aquivo existente
+            <i class="material-symbols-outlined"> edit </i>
+        </button>
+        <button data-btn="novo">
+            Criar um novo arquivo
+            <i class="material-symbols-outlined"> add </i>
+        </button> <br>
+        <small data-texto>Selecione o arquivo <code>config.json</code></small>
+    </header>
+    <script>
+        const url = "https://raw.githubusercontent.com/KillovSky/iris/main/.readme/pt/config.md"
+
+        const buscarDados = async (url) => {
+                const dados = await fetch(url)
+                const parseDados = await dados.text()
+                const str = await parseDados.toString()
+                return str
+            }
+            (async () => {
+                const dado = await buscarDados(url)
+                const md = new Remarkable('full', {
+                    html: true
+                })
+                // console.log(md);
+                const html = await md.render(dado)
+                const details = await html.split("details")
+                const main = document.querySelector("main")
+                const div = document.createElement("div")
+                div.setAttribute("data-div", "")
+                // div.setAttribute("class", "display-none")
+                main.appendChild(div)
+                div.innerHTML = details[5].slice(100, -10)
+            })()
+    </script>
+    <main>
+    </main>
+    <footer class="display-none">
+        <button data-btn="salvar">
+            Salvar
+            <i class="material-symbols-outlined"> save </i>
+        </button><br>
+        <small data-textofinal>O arquivo original sera salvo como uma copia,caso precise de um backup.</small>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+    <script type="module">
+        import { 
+            fileOpen,
+            directoryOpen,
+            fileSave,
+            supported,
+        } from 'https://unpkg.com/browser-fs-access';
+
+        const uls = Array.from(document.querySelectorAll("ul"))
+        const comecar = document.querySelector('[data-btn="comecar"]')
+        const novo = document.querySelector('[data-btn="novo"]')
+        const salvar = document.querySelector('[data-btn="salvar"]')
+        const div = document.querySelector('[data-div]')
+        const texto = document.querySelector('[data-texto]')
+        const textofinal = document.querySelector('[data-textofinal]')
+        const footer = document.querySelector("footer") 
+        let novoArquivo = {}
+        let fileHandle;
+        let abreArquivo
+        let salvaComo
+        let editarArquivo = false
+	
+		const editar = async () => {
+            let arquivo
+            try {
+                if(!editarArquivo){
+                    arquivo = await abreArquivo()
+                }
+                if(editarArquivo){
+                    const arquivojson = await buscarDados("https://raw.githubusercontent.com/KillovSky/iris/main/lib/config/Settings/config.json")
+                    arquivo = await JSON.parse(arquivojson)
+                }
+            } catch (e) {
+			    texto.innerHTML = "<h1><i class='material-symbols-outlined'> warning </i> Seu navegador nao tem suporte ou o arquivo nao pode ser aberto. <i class='material-symbols-outlined'> warning </i></h1>"
+                return
+            }
+
+            try {
+                div.classList.remove("display-none")
+                footer.classList.remove("display-none")
+                comecar.classList.add("display-none")
+                novo.classList.add("display-none")
+                texto.innerHTML = "Siga ate o final para salvar o arquivo"
+                novoArquivo = {
+                    ...arquivo
+                }
+
+                uls.forEach(ul => {
+                    const input = document.createElement("input")
+                    const key = ul.children[0].firstChild.textContent
+
+                    const setInput = (tipo) => {
+                        const valor = tipo === "object" ?
+                            arquivo[key].toString().replace(/,/g, ", ") :
+                            arquivo[key]
+                        const type = tipo === "object" ||tipo === "string" ? "text": tipo
+                        input.setAttribute("type", type)
+                        input.setAttribute("value", valor)
+                        ul.appendChild(input)
+                        input.addEventListener("change", (e) => {
+                            const novoValor = e.target.value
+                            const valueConvert = tipo === "number"? +novoValor : novoValor
+                            novoArquivo[key] = valueConvert
+                        })
+                    }
+
+                    if (typeof (arquivo[key]) === "number") {
+                        setInput("number")
+                    }
+
+                    if (typeof (arquivo[key]) === "string") {
+                        setInput("string")
+                    }
+
+                    if (typeof (arquivo[key]) === "object") {
+                        setInput("object")
+                    }
+
+                    if (typeof (arquivo[key]) === "boolean") {
+                        input.setAttribute("type", "checkbox")
+                        input.setAttribute("id", key)
+                        if (arquivo[key]) {
+                            input.setAttribute("checked", "")
+                        }
+                        const label = document.createElement("label")
+                        label.setAttribute("for", key)
+                        ul.appendChild(input)
+                        ul.appendChild(label)
+                        label.innerText = "false"
+                        if (arquivo[key] === true) {
+                            label.innerText = "true"
+                        }
+                        input.addEventListener("change", (e) => {
+                            const novoValor = "false"
+                            novoArquivo[key] = novoValor
+                            label.innerText = "false"
+                            if (e.target.checked) {
+                                const novoValor = "true"
+                                novoArquivo[key] = novoValor
+                                label.innerText = "true"
+                            }
+                        })
+                    }
+                })
+            } catch (e) {
+			    texto.innerHTML = "<h1><i class='material-symbols-outlined'> warning </i> Por algum motivo nao consegui carregar os arquivos, reinicie a pagina e tente novamente. <i class='material-symbols-outlined'> warning </i></h1>"
+            }
+        }
+
+	(async () => {
+		if (supported) {
+			console.log('Using the File System Access API.');
+			abreArquivo = async () => {
+                [fileHandle] = await window.showOpenFilePicker({
+                    types: [{
+                        description: 'json',
+                        accept: {
+                            'application/json': ['.json']
+                        }
+                    }, ],
+                    suggestedName: 'config',
+                    excludeAcceptAllOption: true,
+                    multiple: false
+                })
+                const data = await fileHandle.getFile()
+                const texto = await data.text()
+                const textoParseado = await JSON.parse(texto)
+                return textoParseado
+            }
+
+            const salvarArquivo = async (novoArquivo) => {
+                const stream = await fileHandle.createWritable()
+                await stream.write(JSON.stringify(novoArquivo))
+                await stream.close()
+            }
+
+            salvaComo = async (novoArquivo) => {
+                try {
+                    fileHandle = await window.showSaveFilePicker({
+                        types: [{
+                            description: 'json',
+                            accept: {
+                                'application/json': ['.json']
+                            }
+                        }, ],
+                        suggestedName: 'config.json',
+                        excludeAcceptAllOption: true
+                    })
+                    salvarArquivo(novoArquivo)
+                } catch (e) {
+                    textofinal.innerHTML = "OPSS! parece que o arquivo nao foi salvo, tente novamente"
+                }
+            }
+        
+		} else {
+			console.log('Using the fallback implementation.')
+            comecar.classList.add("display-none")
+            novo.classList.add("display-none")
+            texto.innerHTML = "<h1><i class='material-symbols-outlined'> warning </i> Puts!! Parece que seu navegador nao é compativel, nao vai dar para continuarmos por aqui. <i class='material-symbols-outlined'> warning </i></h1>"
+
+            // abreArquivo = async () => {
+            //     const blob = await fileOpen({
+            //         description: 'json',
+            //         mimeTypes: ['application/*'],
+            //         extensions: ['.json'],
+            //     })
+            //     const texto = await blob.text()
+            //     const textoParseado = await JSON.parse(texto)
+            //     return textoParseado
+            // }
+            // salvaComo = async (novoArquivo)  => {
+            //     // const blob = novoArquivo
+            //     // await fileSave(blob, {
+            //     // 	fileName: 'config.json',
+            //     // 	extensions: ['.json'],
+            //     // });
+            //     const arq = JSON.stringify(novoArquivo)
+            //     const blob =  Blob(arq, {
+            //         type: "application/json",
+            //     })
+            //     await fileSave(blob, {
+            //             fileName: 'config.json',
+            //             extensions: ['.json'],
+            //         }
+            //     )
+            //     console.log("salvaComo")
+		    // } 
+		}
+	}) ()
+
+        comecar.addEventListener('click', editar)
+        novo.addEventListener('click', ()=>{
+            editarArquivo = true
+            editar()
+        })
+        salvar.addEventListener('click', ()=>{salvaComo(novoArquivo)})
+
+        const themeForm = document.getElementById('theme-form')
+        const updateTheme = () => {
+            const link = 'https://cdn.jsdelivr.net/npm/water.css@2/out/'
+            const theme = themeForm.querySelector('input[name="theme"]:checked').value + '.css'
+            document.querySelector("[data-tema]").href = link + theme
+        }
+        themeForm.addEventListener('change', updateTheme)
+	</script>
+</body>
+
+</html>

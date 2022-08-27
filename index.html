@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css" data-tema>
+    <style>
+        input[type="text"] {
+            width: 100%;
+        }
+
+        .display-none {
+            display: none;
+        }
+    </style>
+    <!-- <script src="script.js" defer></script> -->
+    <title>teste</title>
+</head>
+
+<body>
+    <header>
+        <form id="theme-form">
+            <input type="radio" value="dark" name="theme" id="theme-dark" checked>
+            <label for="theme-dark">Dark theme 🌙</label>
+            <input type="radio" value="light" name="theme" id="theme-light">
+            <label for="theme-light">Light theme ☀</label>
+        </form>
+        <h3 dir="auto">CONFIGURAÇÕES DE USUÁRIO - CONFIG.JSON</h3>
+        <button data-btn="comecar">Começar</button> <br>
+        <small data-texto>Selecione o arquivo <code>config.json</code></small>
+    </header>
+    <script>
+        const url = "https://raw.githubusercontent.com/KillovSky/iris/main/.readme/pt/config.md"
+
+        const buscarDados = async (url) => {
+                const dados = await fetch(url)
+                const parseDados = await dados.text()
+                const str = await parseDados.toString()
+                return str
+            }
+            (async () => {
+                const dado = await buscarDados(url)
+                const md = new Remarkable({
+                    html: true
+                })
+                const html = await md.render(dado);
+                //console.log(typeof(html)) 
+                const details = await html.split("details")
+                //console.log(details[5].slice(100, -10))
+                const main = document.querySelector("main")
+                const div = document.createElement("div")
+                div.setAttribute("data-div", "")
+                div.setAttribute("class", "display-none")
+                main.appendChild(div)
+                div.innerHTML = details[5].slice(100, -10)
+            })()
+    </script>
+    <main>
+    </main>
+    <footer class="display-none">
+        <button data-btn="salvar">Salvar</button><br>
+        <small>O arquivo original sera salvo como uma copia,caso precise de um backup.</small>
+    </footer>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+    <script type="module">
+
+
+        //document.querySelector("body").onload = function(){
+        import { 
+            fileOpen,
+            directoryOpen,
+            fileSave,
+            supported,
+        } from 'https://unpkg.com/browser-fs-access';
+
+        const uls = Array.from(document.querySelectorAll("ul"))
+        const comecar = document.querySelector('[data-btn="comecar"]')
+        const salvar = document.querySelector('[data-btn="salvar"]')
+        const div = document.querySelector('[data-div]')
+        const texto = document.querySelector('[data-texto]')
+        const footer = document.querySelector("footer") 
+        let novoArquivo = {}
+        let fileHandle;
+        let abreArquivo
+        let salvaComo
+        // let blob
+	
+		const editar = async () => {
+            div.classList.remove("display-none")
+            footer.classList.remove("display-none")
+            comecar.classList.add("display-none")
+            texto.innerHTML = "Siga ate o final para salvar o arquivo"
+            const arquivo = await abreArquivo()
+            novoArquivo = {
+                ...arquivo
+            }
+            uls.forEach(ul => {
+                const input = document.createElement("input")
+                const key = ul.children[0].firstChild.textContent
+
+                if (typeof (arquivo[key]) === "number") {
+                    input.setAttribute("type", "number")
+                    input.setAttribute("value", arquivo[key])
+                    ul.appendChild(input)
+                    input.addEventListener("change", (e) => {
+                        const novoValor = e.target.value
+                        novoArquivo[key] = +novoValor
+                    })
+                }
+
+                if (typeof (arquivo[key]) === "string" || typeof (arquivo[key]) === "object") {
+                    input.setAttribute("type", "text")
+                    input.setAttribute("value", arquivo[key])
+                    ul.appendChild(input)
+                    input.addEventListener("change", (e) => {
+                        const novoValor = e.target.value
+                        novoArquivo[key] = novoValor
+                    })
+                }
+
+                if (typeof (arquivo[key]) === "boolean") {
+                    input.setAttribute("type", "checkbox")
+                    input.setAttribute("id", key)
+                    if (arquivo[key]) {
+                        input.setAttribute("checked", "")
+                    }
+                    const label = document.createElement("label")
+                    label.setAttribute("for", key)
+                    ul.appendChild(input)
+                    ul.appendChild(label)
+                    label.innerText = "false"
+                    if (arquivo[key] === true) {
+                        label.innerText = "true"
+                    }
+                    input.addEventListener("change", (e) => {
+                        const novoValor = "false"
+                        novoArquivo[key] = novoValor
+                        label.innerText = "false"
+                        if (e.target.checked) {
+                            const novoValor = "true"
+                            novoArquivo[key] = novoValor
+                            label.innerText = "true"
+                        }
+                    })
+                }
+            })
+        }
+
+	(async () => {
+		if (!supported) {
+			console.log('Using the File System Access API.');
+			
+			abreArquivo = async () => {
+                [fileHandle] = await window.showOpenFilePicker({
+                    types: [{
+                        description: 'json',
+                        accept: {
+                            'application/json': ['.json']
+                        }
+                    }, ],
+                    suggestedName: 'config',
+                    excludeAcceptAllOption: true,
+                    multiple: false
+                })
+                const data = await fileHandle.getFile()
+                const texto = await data.text()
+                const textoParseado = await JSON.parse(texto)
+                return textoParseado
+            }
+
+        
+
+            const salvarArquivo = async (novoArquivo) => {
+                const stream = await fileHandle.createWritable()
+                await stream.write(JSON.stringify(novoArquivo))
+                await stream.close()
+            }
+
+            salvaComo = async (novoArquivo) => {
+                fileHandle = await window.showSaveFilePicker({
+                    types: [{
+                        description: 'json',
+                        accept: {
+                            'application/json': ['.json']
+                        }
+                    }, ],
+                    excludeAcceptAllOption: true
+                })
+                salvarArquivo(novoArquivo)
+            }
+        
+		} else {
+			console.log('Using the fallback implementation.')
+            abreArquivo = async () => {
+                const blob = await fileOpen({
+                    description: 'json',
+                    mimeTypes: ['application/*'],
+                    extensions: ['.json'],
+                })
+                const texto = await blob.text()
+                const textoParseado = await JSON.parse(texto)
+                return textoParseado
+            }
+		}
+		
+		salvaComo = async (novoArquivo)  => {
+            const blob = novoArquivo
+			await fileSave(blob, {
+				fileName: 'config.json',
+				extensions: ['.json'],
+			});
+			console.log("salvaComo", arq.text())
+		} 
+	}) ()
+
+        comecar.addEventListener('click', editar)
+        salvar.addEventListener('click', ()=>{salvaComo(novoArquivo)})
+
+        const themeForm = document.getElementById('theme-form')
+        const updateTheme = () => {
+            const link = 'https://cdn.jsdelivr.net/npm/water.css@2/out/'
+            const theme = themeForm.querySelector('input[name="theme"]:checked').value + '.css'
+            document.querySelector("[data-tema]").href = link + theme
+        }
+        themeForm.addEventListener('change', updateTheme)
+		//} 
+		
+		
+		
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css" data-tema>
+    <style>
+        input[type="text"] {
+            width: 100%;
+        }
+
+        .display-none {
+            display: none;
+        }
+    </style>
+    <!-- <script src="script.js" defer></script> -->
+    <title>teste</title>
+</head>
+
+<body>
+    <form id="theme-form">
+        <input type="radio" value="dark" name="theme" id="theme-dark" checked>
+        <label for="theme-dark">Dark theme 🌙</label>
+        <input type="radio" value="light" name="theme" id="theme-light">
+        <label for="theme-light">Light theme ☀</label>
+    </form>
+    <h3 dir="auto">CONFIGURAÇÕES DE USUÁRIO - CONFIG.JSON</h3>
+    <button data-btn="comecar">Começar</button> <br>
+    <small data-texto>Selecione o arquivo <code>config.json</code></small>
+    <hr>
+    <div data-div class="display-none">
+        <blockquote>
+            <p dir="auto">Todas as configurações são opcionais, exceto <code>Owner</code>, <code>Secure_Group</code> e
+                <code>Owner_SECRET_Password</code>, se você estiver fora do Brasil, <code>DDI</code> e
+                <code>Language</code> também são importantes.</p>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Akinator_Win</a>
+                    → É a porcentagem de advinha para que o Akinator chute quem é.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 90</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Anti_Flood</a>
+                    → Bloqueia o Spam de comandos, valores muito baixos podem causar ban do WhatsApp.</li>
+                <li>Valores: número (tempo em segundos)</li>
+                <li>Padrão: 10</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Auto_Block</a>
+                    → Bloqueia pessoas automaticamente, isso reduz um pouco a velocidade da Íris.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Auto_Update</a>
+                    → Atualiza a Íris em tempo real sempre que você editar um código.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Backup_Time</a>
+                    → O tempo entre cada Backup de arquivos importantes.</li>
+                <li>Valores: número (tempo em minutos)</li>
+                <li>Padrão: 60</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Block_Calls</a>
+                    → Bloqueia chamadas e quem as efetuar.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_Colors</a>
+                    → Quantidade máxima de cores geradas em comandos como ATTP.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 20</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Bot_Commands</a>
+                    → Permite que a Íris rode comandos em si mesma.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Canvas_Audio</a>
+                    → Envia um áudio predeterminado sempre que alguém sair ou entrar no grupo.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Clear_Cache</a>
+                    → Limpa o cache das mensagens após 'x' tempo.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Check_Stickers</a>
+                    → Checa sticker procurando links, travas, vírus e outros.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Check_Nickname</a>
+                    → Checa nicknames procurando links, travas, vírus e outros.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Filter_Type</a>
+                    → Modos de uso do Anti-Flood.</li>
+                <li>Valores: 'user', 'chatId'</li>
+                <li>Padrão: 'chatId'</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Daily_Reward</a>
+                    → A recompensa dos resgates diários de recompensa.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 30</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Day_Messages</a>
+                    → Envia mensagens de cumprimento a cada 6 horas.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">DDI</a> → Bane
+                    pessoas com números falsos ou números internacionais.</li>
+                <li>Valores: array de números</li>
+                <li>Padrão: ["55", "DDI DOIS - Opcional"]</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Enable_EAS</a>
+                    → Ativa as transmissões de KillovSky no terminal, é útil para receber noticias sobre updates.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Enable_Backups</a>
+                    → Ativa o Backup de arquivos importantes.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Fig_FPS</a> →
+                    O FPS dos stickers animados, valores muito altos podem causar erros com o peso.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 10</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Iris_Coin</a>
+                    → Quantidade de I'coins ganhas por level e adicional em jogos.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 10</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Language</a> →
+                    Linguagem de todos os diálogos, textos e traduções.</li>
+                <li>Valores: "en", "pt", "es"</li>
+                <li>Padrão: "pt"</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_Backups</a>
+                    → Controla a quantidade de Backups na pasta de Backups.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 3</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_Commands</a>
+                    → Define o limite do uso de múltiplos comandos após alguém tentar usar vários em uma mensagem.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 2</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_Download_Size</a>
+                    → Controla o peso máximo de upload de mídia, não afeta comandos de dono como 'upload'.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 16</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_Groups</a>
+                    → A quantidade máxima de grupos na Íris, ao passar deste valor, ela saíra até que chegue no valor
+                    especificado.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 10</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_Msg_Cache</a>
+                    → Configura o número de mensagens necessário para a limpeza de cache.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 3000</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_Revoked</a>
+                    → Quantidade máxima de mensagens revogadas, ao passar o limite, as ultimas da lista serão apagadas.
+                </li>
+                <li>Valores: número</li>
+                <li>Padrão: 20</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Min_Steal</a>
+                    → Quantidade mínima de LOOT que os ladrões obtêm no comando 'steal'.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 10</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_Steal</a>
+                    → Quantidade máxima de LOOT que os ladrões podem obter no 'steal'.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 1000</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Steal_Reduce_Limit</a>
+                    → Configura a redução de valores do 'Steal', não use valores abaixo de 1.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 3</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_Votes</a>
+                    → Quantidade padrão de votos necessários, caso o criador não especifique manualmente.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 10</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_XP_Earn</a>
+                    → Quantidade máxima de XP que os usuários podem obter no sistema de level.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 50</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Steal_Percent_Sucess</a>
+                    → Taxa de sucesso dos comandos de steal.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 70</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Min_Membros</a>
+                    → Quantidade mínima de membros que um grupo deve obter para que a Íris permaneça nele.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 1</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Min_XP_Earn</a>
+                    → Quantidade mínima de XP que os usuários podem obter no sistema de level.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 15</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Minimal_Similarity_Command</a>
+                    → A quantidade mínima de similaridade para a correção de comandos escritos incorretamente.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 70</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Moment_Locale</a>
+                    → Configura o local para obter um horário correto.</li>
+                <li>Valores: <a href="https://github.com/moment/moment/tree/develop/locale">string</a></li>
+                <li>Padrão: "pt_BR"</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Moment_Timezone</a>
+                    → Configura a timezone para obter o horário UTC correto.</li>
+                <li>Valores: <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
+                        rel="nofollow">string</a></li>
+                <li>Padrão: "America/Sao_Paulo"</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Multitasking</a>
+                    → Ao ativar isso, a Íris pode executar múltiplos comandos enviados em apenas uma mensagem.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Niver_Present</a>
+                    → O valor do presente de aniversario dos usuários em I'coin.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 1000</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Owner</a> → A
+                    lista de donos da Íris, pessoas inseridas aqui possuem total controle dos sistemas da Íris.</li>
+                <li>Valores: array de números com string</li>
+                <li>Padrão: ["Insira seu nú<a href="mailto:mero@c.us">mero@c.us</a>", "Número 2 - <a
+                        href="mailto:Opcional@c.us">Opcional@c.us</a>", "Não remova o @c.us - 3° Nú<a
+                        href="mailto:mero@c.us">mero@c.us</a>"]</li>
+                <li>Exemplo: ["<a href="mailto:5511987654321@c.us">5511987654321@c.us</a>"]</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Hide_Owner_Number</a>
+                    → Oculta o número do dono na maioria dos comandos por segurança.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Popup</a> →
+                    Ativa as notificações da Íris na sua tela do PC.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Prefix</a> →
+                    Prefixos da Íris, mensagens que comecem com eles serão detectadas como comandos.</li>
+                <li>Valores: array de qualquer coisa</li>
+                <li>Padrão: ["/", "$", "#", ".", "\", "@", "=", "?", "+", "!", "&amp;", ":", ";", "^", "&gt;", "&lt;"]
+                </li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_Divider_Win</a>
+                    → Quantidade de redução das perdas e ganhos nos jogos, não configure como abaixo de 1.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 3</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Prize_Value_Max</a>
+                    → O premio máximo de alguns jogos como 'Mix'.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 200</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Prize_Value_Min</a>
+                    → O premio mínimo de alguns jogos como 'Mix'.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 20</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Puppeteer_Wait</a>
+                    → Tempo máximo de espera do puppeteer, após esgotar, a Íris fechará os comandos como CPF
+                    forçadamente.</li>
+                <li>Valores: número (time in milissegundos)</li>
+                <li>Padrão: 220000</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Search_Results</a>
+                    → Quantidade máxima de resultados no comando 'duck'.</li>
+                <li>Valores: número</li>
+                <li>Default: 10</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">StartUP_MSGs_Groups</a>
+                    → Se você ativar isto, a Íris avisará que ficou online em todos os grupos.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Sticker_Author</a>
+                    → Autor padrão dos stickers, se você quiser definir como quem enviar a mensagem, basta não editar.
+                </li>
+                <li>Valores: string</li>
+                <li>Padrão: "DONTEDITUSR - DONTEDITGPN"</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Sticker_Pack</a>
+                    → Nome padrão dos packs de sticker.</li>
+                <li>Valores: string</li>
+                <li>Padrão: "<g-emoji class="g-emoji" alias="beginner"
+                        fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f530.png"><img
+                            class="emoji" alt="beginner" height="20" width="20"
+                            src="https://github.githubassets.com/images/icons/emoji/unicode/1f530.png"></g-emoji> Legião
+                    Z [bit.ly/BOT-IRIS] Íris <g-emoji class="g-emoji" alias="fleur_de_lis"
+                        fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/269c.png"><img
+                            class="emoji" alt="fleur_de_lis" height="20" width="20"
+                            src="https://github.githubassets.com/images/icons/emoji/unicode/269c.png"></g-emoji>"</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">User_Agent</a>
+                    → User-Agent padrão para módulos como 'axios' e outros, útil para evitar bloqueios de U.A na Íris.
+                </li>
+                <li>Valores: <a href="https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome"
+                        rel="nofollow">string</a></li>
+                <li>Padrão: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)
+                    Chrome/100.0.4896.127 Safari/537.36"</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Update_CMDS_On_Boot</a>
+                    → Atualiza a lista de comandos na inicialização, útil para quem sempre cria novos comandos.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Wait_to_Play</a>
+                    → Tempo de espera para jogar novamente jogos após jogar.</li>
+                <li>Valores: número (tempo em minutos)</li>
+                <li>Padrão: 30</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Wait_to_Win</a>
+                    → Tempo de espera de cada ganho de XP.</li>
+                <li>Valores: número (tempo em minutos)</li>
+                <li>Padrão: 60</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">XP_Difficulty</a>
+                    → Dificuldade do sistema de XP, quanto maior o número, maior é a dificuldade para subir de nivel.
+                </li>
+                <li>Valores: número</li>
+                <li>Padrão: 6</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Your_Name</a>
+                    → Nome ou apelido do dono, será usado quando o sticker não puder ser criado com valores padrão, use
+                    somente letras normais.</li>
+                <li>Valores: string</li>
+                <li>Padrão: "KillovSky"</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Owner_SECRET_Password</a>
+                    → A senha secreta do dono, se você não definir um 'Owner', basta colocar essa senha na mensagem para
+                    usar os comandos de dono, NÃO DEIXE A SENHA PADRÃO!</li>
+                <li>Valores: string</li>
+                <li>Padrão: "irisBOT@Root"</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Finish_Message</a>
+                    → Determina se deve enviar a mensagem de termino de um comando.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Wait_Message</a>
+                    → Determina se deve enviar a mensagem de espera de um comando.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Iris_Read_Messages</a>
+                    → Faz com que a Íris leia as mensagens (Tick Azul).</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_Warning</a>
+                    → Quantidade máxima de avisos antes de banir uma pessoa no comando 'Warn'.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 3</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Bot_Name</a> →
+                    Permite mudar o nome da Íris, não afeta pronomes.</li>
+                <li>Valores: string</li>
+                <li>Padrão: 'Iris'</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Private_Chat_Register</a>
+                    → Determina se usuários precisam de cadastro para utilizar no PV.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Members_Group_Register</a>
+                    → Determina se usuários de grupo precisam de cadastro para utilizar.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Adm_Vip_Mod_Register</a>
+                    → Determina se administradores, VIP's e moderadores precisam de cadastro.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Commands_Error_Photo</a>
+                    → Foto padrão para caso de erros em obter fotos ao usar comandos.</li>
+                <li>Valores: string</li>
+                <li>Padrão: 'Iris'</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Profile_Error_Photo</a>
+                    → Foto padrão de usuário para caso ele não possua uma ou obtenha falhas ao baixar.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: false</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Secure_Mode</a>
+                    → Desativa os sistemas automaticamente no primeiro erro recebido deles.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Welcome_Sleep</a>
+                    → Tempo em minutos que a Íris deve esperar antes de dar outro welcome.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 30</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Goodbye_Sleep</a>
+                    → Tempo em minutos que a Íris deve esperar antes de dar outro goodbye.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 30</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Blacklist_Sleep</a>
+                    → Tempo em minutos que a Íris deve esperar antes de enviar outra mensagem de blacklist.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 30</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Fake_Sleep</a>
+                    → Tempo em minutos que a Íris deve esperar antes de enviar outra mensagem de fake.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 30</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Secure_Group</a>
+                    → Grupo seguro para receber alertas de emergência ou mensagens similares.</li>
+                <li>Valores: "<a href="mailto:String@g.us">String@g.us</a>"</li>
+                <li>Padrão: "INSIRA A ID DE UM GRUPO <a href="mailto:SEGURO@g.us">SEGURO@g.us</a>"</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Max_Lotery</a>
+                    → Máximo de ganhos na loteria.</li>
+                <li>Valores: número</li>
+                <li>Padrão: 10000</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Perfomance_Mode</a>
+                    → Diz se a Íris deve rodar após o firewall verificar a mensagem ou ao mesmo tempo (Segurança ou
+                    Perfomance?).</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <blockquote>
+            <ul dir="auto">
+                <li><a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json">Day_Yield</a>
+                    → Porcentagem de rendimentos do banco, ainda não é usado, reservado para o futuro.</li>
+                <li>Valores: true, false</li>
+                <li>Padrão: true</li>
+            </ul>
+        </blockquote>
+        <hr>
+        <button data-btn="salvar">Salvar</button><br>
+        <small>O arquivo original sera salvo como uma copia,caso precise de um backup.</small>
+    </div>
+    <script>
+        const uls = Array.from(document.querySelectorAll("ul"))
+        const comecar = document.querySelector('[data-btn="comecar"]')
+        const salvar = document.querySelector('[data-btn="salvar"]')
+        const div = document.querySelector('[data-div]')
+        const texto = document.querySelector('[data-texto]')
+        let novoArquivo = {}
+        let fileHandle;
+
+        const abreArquivo = async () => {
+            [fileHandle] = await window.showOpenFilePicker({
+                types: [{
+                    description: 'json',
+                    accept: {
+                        'application/json': ['.json']
+                    }
+                }, ],
+                suggestedName: 'config',
+                excludeAcceptAllOption: true,
+                multiple: false
+            })
+            const data = await fileHandle.getFile()
+            const texto = await data.text()
+            const textoParseado = await JSON.parse(texto)
+            return textoParseado
+        }
+
+        const editar = async () => {
+            div.classList.remove("display-none")
+            comecar.classList.add("display-none")
+            texto.innerHTML = "Siga ate o final para salvar o arquivo"
+            const arquivo = await abreArquivo()
+            novoArquivo = {
+                ...arquivo
+            }
+            uls.forEach(ul => {
+                const input = document.createElement("input")
+                const key = ul.children[0].firstChild.textContent
+
+                if (typeof (arquivo[key]) === "number") {
+                    input.setAttribute("type", "number")
+                    input.setAttribute("value", arquivo[key])
+                    ul.appendChild(input)
+                    input.addEventListener("change", (e) => {
+                        const novoValor = e.target.value
+                        novoArquivo[key] = +novoValor
+                    })
+                }
+
+                if (typeof (arquivo[key]) === "string" || typeof (arquivo[key]) === "object") {
+                    input.setAttribute("type", "text")
+                    input.setAttribute("value", arquivo[key])
+                    ul.appendChild(input)
+                    input.addEventListener("change", (e) => {
+                        const novoValor = e.target.value
+                        novoArquivo[key] = novoValor
+                    })
+                }
+
+                if (typeof (arquivo[key]) === "boolean") {
+                    input.setAttribute("type", "checkbox")
+                    input.setAttribute("id", key)
+                    if (arquivo[key]) {
+                        input.setAttribute("checked", "")
+                    }
+                    const label = document.createElement("label")
+                    label.setAttribute("for", key)
+                    ul.appendChild(input)
+                    ul.appendChild(label)
+                    label.innerText = "false"
+                    if (arquivo[key] === true) {
+                        label.innerText = "true"
+                    }
+                    input.addEventListener("change", (e) => {
+                        const novoValor = "false"
+                        novoArquivo[key] = novoValor
+                        label.innerText = "false"
+                        if (e.target.checked) {
+                            const novoValor = "true"
+                            novoArquivo[key] = novoValor
+                            label.innerText = "true"
+                        }
+                    })
+                }
+            })
+        }
+
+        const salvarArquivo = async () => {
+            const stream = await fileHandle.createWritable()
+            await stream.write(JSON.stringify(novoArquivo))
+            await stream.close()
+        }
+
+        const salvaComo = async () => {
+            fileHandle = await window.showSaveFilePicker({
+                types: [{
+                    description: 'json',
+                    accept: {
+                        'application/json': ['.json']
+                    }
+                }, ],
+                excludeAcceptAllOption: true
+            })
+            salvarArquivo()
+        }
+
+        comecar.addEventListener('click', editar)
+        salvar.addEventListener('click', salvaComo)
+
+        const themeForm = document.getElementById('theme-form')
+        const updateTheme = () => {
+            const link = 'https://cdn.jsdelivr.net/npm/water.css@2/out/'
+            const theme = themeForm.querySelector('input[name="theme"]:checked').value + '.css'
+            document.querySelector("[data-tema]").href = link + theme
+        }
+        themeForm.addEventListener('change', updateTheme)
+    </script>
+</body>
+
+</html>
