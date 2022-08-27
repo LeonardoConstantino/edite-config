@@ -24,7 +24,7 @@
             display: none;
         }
 
-        button, label{
+        button, label, small{
             display: inline-flex;
             align-items: center;
             justify-content: space-between;
@@ -99,7 +99,10 @@
             Salvar
             <i class="material-symbols-outlined"> save </i>
         </button><br>
-        <small data-textofinal>O arquivo original sera salvo como uma copia,caso precise de um backup.</small>
+        <small data-textofinal>
+            <span class="material-symbols-outlined"> info </span>
+            Nao se esqueça de fazer um backup do arquivo original.
+        </small>
     </footer>
     <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
     <script type="module">
@@ -252,7 +255,7 @@
                     })
                     salvarArquivo(novoArquivo)
                 } catch (e) {
-                    textofinal.innerHTML = "OPSS! parece que o arquivo nao foi salvo, tente novamente"
+                    textofinal.innerHTML = "<i class='material-symbols-outlined'> warning </i> OPSS! parece que o arquivo nao foi salvo, tente novamente <i class='material-symbols-outlined'> warning </i>"
                 }
             }
         
@@ -260,7 +263,7 @@
 			console.log('Using the fallback implementation.')
             comecar.classList.add("display-none")
             novo.classList.add("display-none")
-            texto.innerHTML = "<h1><i class='material-symbols-outlined'> warning </i> Puts!! Parece que seu navegador nao é compativel, nao vai dar para continuarmos por aqui. <i class='material-symbols-outlined'> warning </i></h1>"
+            texto.innerHTML = "<h1><i class='material-symbols-outlined'> warning </i> Puts!! Parece que seu navegador nao é compatível, nao vai dar para continuarmos por aqui. <i class='material-symbols-outlined'> warning </i></h1>"
 
             // abreArquivo = async () => {
             //     const blob = await fileOpen({
