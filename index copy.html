@@ -14,6 +14,50 @@
             width: 100%;
         }
 
+        .config{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .pesquisa{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: fit-content;
+            margin: 0;
+            transition: all .3s ease-in-out
+        }
+        .pesquisa input[type="search"] {
+            width: 34px;
+            margin: 0;
+            transition: width .3s ease-in-out
+        }
+
+        .pesquisa input[type="search"]::placeholder {
+            opacity: 0;
+            transition: opacity .5s ease-in-out
+        }
+
+        .pesquisa i {
+            transform: translateX(150%);
+            transition: all .2s ease-in-out
+        }
+
+        input[type="search"]:focus, .pesquisa:hover input[type="search"]{
+            width: 50%;
+            min-width: 300px;
+            transition: width .3s ease-out
+        }
+
+        input[type="search"]:focus, .pesquisa:hover input[type="search"]::placeholder {
+            opacity: 1;
+        }
+
+        input[type="search"]:focus, .pesquisa:hover i{
+            transform: translateX(0);
+        }
+
         fieldset {
             display: flex;
             justify-content: space-around;
@@ -81,7 +125,6 @@
                 const md = new Remarkable('full', {
                     html: true
                 })
-                // console.log(md);
                 const html = await md.render(dado)
                 const details = await html.split("details")
                 const main = document.querySelector("main")
@@ -93,6 +136,12 @@
             })()
     </script>
     <main>
+        <header class="config">
+            <label class="pesquisa">
+                <i class="material-symbols-outlined">search</i>
+                <input type="search" data-pesquisa placeholder="pesquisar...">
+            </label>
+        </header>
     </main>
     <footer class="display-none">
         <button data-btn="salvar">
@@ -126,6 +175,20 @@
         let abreArquivo
         let salvaComo
         let editarArquivo = false
+
+        const mensagem = (key) => {
+            const msg = {
+                semSuporte: "<h1><i class='material-symbols-outlined'> warning </i> Seu navegador nao tem suporte ou o arquivo nao pode ser aberto. <i class='material-symbols-outlined'> warning </i></h1>",
+
+                naoCarregaAqrquivos: "<h1><i class='material-symbols-outlined'> warning </i> Por algum motivo nao consegui carregar os arquivos, reinicie a pagina e tente novamente. <i class='material-symbols-outlined'> warning </i></h1>",
+
+                naoSalvou: "<i class='material-symbols-outlined'> warning </i> OPSS! parece que o arquivo nao foi salvo, tente novamente <i class='material-symbols-outlined'> warning </i>",
+
+                navegadorNaoCompativel: "<h1><i class='material-symbols-outlined'> warning </i> Puts!! Parece que seu navegador nao é compatível, nao vai dar para continuarmos por aqui. <i class='material-symbols-outlined'> warning </i></h1>",
+
+            }
+            return msg[key]
+        }
 	
 		const editar = async () => {
             let arquivo
@@ -138,7 +201,7 @@
                     arquivo = await JSON.parse(arquivojson)
                 }
             } catch (e) {
-			    texto.innerHTML = "<h1><i class='material-symbols-outlined'> warning </i> Seu navegador nao tem suporte ou o arquivo nao pode ser aberto. <i class='material-symbols-outlined'> warning </i></h1>"
+			    texto.innerHTML = mensagem("semSuporte")
                 return
             }
 
@@ -210,7 +273,7 @@
                     }
                 })
             } catch (e) {
-			    texto.innerHTML = "<h1><i class='material-symbols-outlined'> warning </i> Por algum motivo nao consegui carregar os arquivos, reinicie a pagina e tente novamente. <i class='material-symbols-outlined'> warning </i></h1>"
+			    texto.innerHTML =  mensagem("naoCarregaAqrquivos")
             }
         }
 
@@ -255,7 +318,7 @@
                     })
                     salvarArquivo(novoArquivo)
                 } catch (e) {
-                    textofinal.innerHTML = "<i class='material-symbols-outlined'> warning </i> OPSS! parece que o arquivo nao foi salvo, tente novamente <i class='material-symbols-outlined'> warning </i>"
+                    textofinal.innerHTML = mensagem("naoSalvou")
                 }
             }
         
@@ -263,7 +326,7 @@
 			console.log('Using the fallback implementation.')
             comecar.classList.add("display-none")
             novo.classList.add("display-none")
-            texto.innerHTML = "<h1><i class='material-symbols-outlined'> warning </i> Puts!! Parece que seu navegador nao é compatível, nao vai dar para continuarmos por aqui. <i class='material-symbols-outlined'> warning </i></h1>"
+            texto.innerHTML = mensagem("navegadorNaoCompativel")
 
             // abreArquivo = async () => {
             //     const blob = await fileOpen({
@@ -309,6 +372,23 @@
             document.querySelector("[data-tema]").href = link + theme
         }
         themeForm.addEventListener('change', updateTheme)
+
+        document.querySelector('[data-pesquisa]').addEventListener('input', (e) => {
+            uls.forEach((item) => {
+                const hr = item.parentElement.nextSibling.nextSibling
+                const blockquote = item.parentElement
+                const key = item.children[0].firstChild.textContent.toLowerCase()
+                const pesquisa = e.target.value.toLowerCase()
+
+                blockquote.classList.add("display-none")
+                if(hr) hr.classList.add("display-none")
+
+                if(key.includes(pesquisa)){
+                    item.parentElement.classList.remove("display-none")
+                    if(hr) hr.classList.remove("display-none")
+                }
+            })
+        })
 	</script>
 </body>
 
