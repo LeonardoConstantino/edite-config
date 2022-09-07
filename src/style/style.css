@@ -1,0 +1,174 @@
+section{
+    height: 98vh;
+    overflow-y: scroll;
+}
+
+li{
+    margin-bottom: 6px;
+}
+
+li > code{
+    padding: 6px 8px;
+    font-size: 1.2em;
+}
+
+/* .config-inicio{
+    display: flex;
+} */
+
+h1 {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+input[type="text"] {
+    width: 98%;
+}
+
+.config {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 6px;
+    position: sticky; 
+    top: 30px;
+}
+
+input[type="radio"] {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    width: 24px;
+}
+
+fieldset {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: fit-content;
+    gap: .5em;
+}
+
+.forms {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .5em;
+}
+
+.pesquisa {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+
+    transition: all .3s ease-in-out
+}
+
+.pesquisa input[type="search"] {
+    width: 34px;
+    margin: 0;
+    transition: width .6s ease-in-out
+}
+
+.pesquisa input[type="search"]::placeholder {
+    opacity: 0;
+    transition: opacity .5s ease-in-out .65s
+}
+
+.pesquisa i {
+    transform: translateX(150%);
+    transition: all .2s ease-in-out .65s
+}
+
+input[type="search"]:focus, input[type="search"]:hover {
+    width: calc(100% - 35px);
+    transition: width .3s ease-out
+}
+input[type="search"]:focus .pesquisa{
+    width: calc(100% - 35px);
+}
+
+input[type="search"]:focus,
+.pesquisa:hover input[type="search"]::placeholder {
+    opacity: 1;
+}
+
+input[type="search"]:focus,
+.pesquisa:hover i {
+    transform: translateX(0);
+}
+
+blockquote {
+    border-bottom: #0096bf59 solid 1px;
+}
+
+.display-none {
+    display: none;
+}
+
+button,
+label,
+small {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .5em;
+}
+
+.div-aviso {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+div[data-aviso]>div {
+    visibility: hidden;
+    opacity: 0;
+    width: fit-content;
+    max-width: 500px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    margin-top: 6px;
+    bottom: 30px;
+    transition: opacity .5s ease-in-out
+}
+
+div[data-aviso]>div.mostrar {
+    visibility: visible;
+    opacity: 1;
+    animation: fadein 0.5s, fadeout 0.8s 4.5s;
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}

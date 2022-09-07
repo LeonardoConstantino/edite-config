@@ -1,2 +1,2 @@
 # edite config
- sigle page para edsitar o config.json
+ sigle page para editar o config.json
