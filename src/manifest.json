@@ -44,6 +44,12 @@
          "sizes": "192x192",
          "type": "image\/png",
          "density": "4.0"
+        },
+        {
+         "src": "../src/imagens/printscren/Capturar.JPG",
+         "sizes": "947x639",
+         "type": "image\/png",
+         "density": "4.0"
         }
        ],
     "related_applications": [{
