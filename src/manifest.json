@@ -6,6 +6,7 @@
     "display": "standalone",
     "scope": "./",
     "background_color": "#202b38",
+    "theme_color": "#202b38",
     "description": "Ajuda a editar o arquivo config.json, para pessoas com pouco conhecimento em programação",
     "icons": [
         {
@@ -48,7 +49,7 @@
         {
          "src": "../src/imagens/printscren/Capturar.JPG",
          "sizes": "947x639",
-         "type": "image\/png",
+         "type": "image\/JPG",
          "density": "4.0"
         }
        ],
