@@ -34,14 +34,17 @@ let editandoArquivoNovo = false
 
 const editar = async () => {
     let arquivo
+
     window.scrollTo({
         top: sectionConfig.offsetTop,
         behavior: 'smooth'
     })
+
     try {
         if (!editandoArquivoNovo) {
             arquivo = await abreArquivo()
         }
+
         if (editandoArquivoNovo) {
             const arquivojson = await buscarDados("https://raw.githubusercontent.com/KillovSky/iris/main/lib/config/Settings/config.json")
             arquivo = await JSON.parse(arquivojson)
@@ -57,7 +60,9 @@ const editar = async () => {
         inputPesquisa.parentElement.classList.remove("display-none")
         comecar.classList.add("display-none")
         novo.classList.add("display-none")
+
         mensagem("ateOFinal")
+
         novoArquivo = {
             ...arquivo
         }
@@ -65,60 +70,67 @@ const editar = async () => {
         uls.forEach(ul => {
             const input = document.createElement("input")
             const key = ul.children[0].firstChild.textContent
+            const type = typeof (arquivo[key])
 
             const setInput = (tipo) => {
                 const valor = tipo === "object" ?
                     arquivo[key].toString().replace(/,/g, ", ") :
                     arquivo[key]
+
                 const type = tipo === "object" || tipo === "string" ? "text" : tipo
+
                 input.setAttribute("type", type)
                 input.setAttribute("value", valor)
                 ul.insertAdjacentElement("afterend", input)
-                input.addEventListener("change", (e) => {
+
+                const atualizaValorNoArquivo = (e) => {
                     const novoValor = e.target.value
                     const valueConvert = tipo === "number" ? +novoValor : novoValor
                     novoArquivo[key] = valueConvert
-                })
-            }
-
-            if (typeof (arquivo[key]) === "number") {
-                setInput("number")
-            }
-
-            if (typeof (arquivo[key]) === "string") {
-                setInput("string")
-            }
-
-            if (typeof (arquivo[key]) === "object") {
-                setInput("object")
-            }
-
-            if (typeof (arquivo[key]) === "boolean") {
-                input.setAttribute("type", "checkbox")
-                input.setAttribute("id", key)
-                if (arquivo[key]) {
-                    input.setAttribute("checked", "")
                 }
-                const label = document.createElement("label")
-                label.setAttribute("for", key)
-                ul.insertAdjacentElement("afterend", label)
-                ul.insertAdjacentElement("afterend", input)
-                label.innerText = "false"
-                if (arquivo[key] === true) {
-                    label.innerText = "true"
-                }
-                input.addEventListener("change", (e) => {
-                    const novoValor = "false"
-                    novoArquivo[key] = novoValor
+
+                input.addEventListener("change", atualizaValorNoArquivo)
+
+                if (tipo === "boolean") {
+                    input.setAttribute("type", "checkbox")
+                    input.setAttribute("id", key)
+
+                    if (arquivo[key]) {
+                        input.setAttribute("checked", "")
+                    }
+
+                    const label = document.createElement("label")
+                    label.setAttribute("for", key)
+                    ul.insertAdjacentElement("afterend", label)
+                    ul.insertAdjacentElement("afterend", input)
+
                     label.innerText = "false"
-                    if (e.target.checked) {
-                        const novoValor = "true"
-                        novoArquivo[key] = novoValor
+                    if (arquivo[key]) {
                         label.innerText = "true"
                     }
-                })
+
+                    const atualizaValorBooleanNoArquivo = (e) => {
+                        const novoValor = "false"
+                        novoArquivo[key] = novoValor
+                        label.innerText = "false"
+
+                        if (e.target.checked) {
+                            const novoValor = "true"
+                            novoArquivo[key] = novoValor
+                            label.innerText = "true"
+                        }
+                    }
+
+                    input.addEventListener("change", atualizaValorBooleanNoArquivo)
+                }
             }
+
+            if (type === "number") setInput("number")
+            if (type === "string") setInput("string")
+            if (type === "object") setInput("object")
+            if (type === "boolean") setInput("boolean")
         })
+
     } catch (e) {
         mensagem("naoCarregaArquivos")
     }
@@ -127,6 +139,7 @@ const editar = async () => {
 (async () => {
     if (supported) {
         mensagem("usandoAPI")
+
         abreArquivo = async () => {
             [fileHandle] = await window.showOpenFilePicker({
                 types: [{
@@ -139,6 +152,7 @@ const editar = async () => {
                 excludeAcceptAllOption: true,
                 multiple: false
             })
+
             const data = await fileHandle.getFile()
             const texto = await data.text()
             const textoParseado = await JSON.parse(texto)
@@ -163,8 +177,10 @@ const editar = async () => {
                     suggestedName: 'config.json',
                     excludeAcceptAllOption: true
                 })
+
                 salvarArquivo(novoArquivo)
                 mensagem("salvo")
+
             } catch (e) {
                 mensagem("naoSalvou")
             }
@@ -172,11 +188,9 @@ const editar = async () => {
 
     } else {
         mensagem("usandoFallback")
-        // comecar.classList.add("display-none")
+
         salvar.classList.add("display-none")
         copiar.classList.remove("display-none")
-        // novo.classList.add("display-none")
-        // mensagem("navegadorNaoCompativel")
 
         abreArquivo = async () => {
             const blob = await fileOpen({
@@ -184,27 +198,11 @@ const editar = async () => {
                 mimeTypes: ['application/*'],
                 extensions: ['.json'],
             })
+            
             const texto = await blob.text()
             const textoParseado = await JSON.parse(texto)
             return textoParseado
         }
-        // salvaComo = async (novoArquivo)  => {
-        //     // const blob = novoArquivo
-        //     // await fileSave(blob, {
-        //     // 	fileName: 'config.json',
-        //     // 	extensions: ['.json'],
-        //     // });
-        //     // const arq = JSON.stringify(novoArquivo)
-        //     // const blob =  Blob(arq, {
-        //     //     type: "application/json",
-        //     // })
-        //     // await fileSave(blob, {
-        //     //         fileName: 'config.json',
-        //     //         extensions: ['.json'],
-        //     //     }
-        //     // )
-        //     // console.log("salvaComo")
-        // } 
     }
 })()
 
@@ -251,16 +249,27 @@ const mudarLingua = async () => {
     mensagem("idiomaAlterado")
 }
 
-const copiarEMostrarCopiaDoConteudo = (novoArquivo) => {
+const copiarEMostrarConteudoCopiado = (novoArquivo) => {
+    const jsonConteiner = document.querySelector('[data-json]')
+    const divJson = document.querySelector('[data-divJson]')
+    const novoArquivoJson = JSON.stringify(novoArquivo, null, "\t")
+
     inputPesquisa.parentElement.classList.add("display-none")
-    navigator.clipboard.writeText(JSON.stringify(novoArquivo, null, "\t"))
-    div.innerHTML = `<pre><code>${JSON.stringify(novoArquivo, null, "\t")}</code></pre>`
+    div.classList.add("display-none")
+    divJson.classList.remove("display-none")
+
+    navigator.clipboard.writeText(novoArquivoJson)
+
+    jsonConteiner.innerHTML = novoArquivoJson
+
     mensagem("copiado")
 }
 
 const editarNovoArquivo = () => {
     editandoArquivoNovo = true
+
     editar()
+
     window.scrollTo({
         top: sectionConfig.offsetTop,
         behavior: 'smooth'
@@ -283,16 +292,20 @@ const mostraBktQueContemTermoPesquisado = (e) => {
     uls.forEach(mostrarSomenteTermosPesquisados)
 }
 
-inputPesquisa.addEventListener('input', (e) => {
-    mostraBktQueContemTermoPesquisado(e)
-})
+inputPesquisa.addEventListener('input', mostraBktQueContemTermoPesquisado)
+
 comecar.addEventListener('click', editar)
+
 novo.addEventListener('click', editarNovoArquivo)
+
 salvar.addEventListener('click', () => {
     salvaComo(novoArquivo)
 })
+
 copiar.addEventListener('click', () => {
-    copiarEMostrarCopiaDoConteudo(novoArquivo)
+    copiarEMostrarConteudoCopiado(novoArquivo)
 })
+
 themeForm.addEventListener('change', updateTheme)
+
 lingua.addEventListener('change', mudarLingua)
