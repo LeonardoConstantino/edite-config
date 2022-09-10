@@ -198,7 +198,7 @@ const editar = async () => {
                 mimeTypes: ['application/*'],
                 extensions: ['.json'],
             })
-            
+
             const texto = await blob.text()
             const textoParseado = await JSON.parse(texto)
             return textoParseado
