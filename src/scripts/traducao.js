@@ -1,6 +1,6 @@
 export const mensagem = (key) => {
-    const lingua = document.querySelector('[data-lingua]')
-    const linguaSelecionada = lingua.querySelector('input[name="lingua"]:checked').value
+    const formeLingua = document.querySelector('[data-lingua]')
+    const linguaSelecionada = formeLingua.querySelector('input[name="lingua"]:checked').value
     const msg = {
         semSuporte: {
             pt: `<h3><i class='material-symbols-outlined'> warning </i> Seu navegador nao tem suporte ou o arquivo nao pode ser aberto. <i class='material-symbols-outlined'> warning </i></h3>`,
@@ -59,7 +59,7 @@ export const mensagem = (key) => {
         }
     }
     const avisosNaTela = Array.from(document.querySelectorAll('[data-avisoNaTela]'))
-    if(avisosNaTela.length !== 0){
+    if (avisosNaTela.length !== 0) {
         avisosNaTela.forEach(aviso => aviso.classList.remove("mostrar"))
     }
 
@@ -70,12 +70,12 @@ export const mensagem = (key) => {
     aviso.innerHTML = msg[key][linguaSelecionada]
     aviso.classList.add("mostrar")
 
-    setTimeout(() => { aviso.remove() }, 5000)
+    setTimeout(() => {
+        aviso.remove()
+    }, 5000)
 }
 
-export 
-
-const traduzir = (lingua) => {
+export const traduzir = (lingua) => {
     const textos = Array.from(document.querySelectorAll("[data-trad]"))
 
     const traducaos = {

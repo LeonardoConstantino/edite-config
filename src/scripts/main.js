@@ -67,7 +67,7 @@ const editar = async () => {
             ...arquivo
         }
 
-        uls.forEach(ul => {
+        const criaInputParaCadaKey = ul => {
             const input = document.createElement("input")
             const key = ul.children[0].firstChild.textContent
             const type = typeof (arquivo[key])
@@ -129,7 +129,9 @@ const editar = async () => {
             if (type === "string") setInput("string")
             if (type === "object") setInput("object")
             if (type === "boolean") setInput("boolean")
-        })
+        }
+
+        uls.forEach(criaInputParaCadaKey)
 
     } catch (e) {
         mensagem("naoCarregaArquivos")

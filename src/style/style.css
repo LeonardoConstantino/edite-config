@@ -1,13 +1,13 @@
-section{
+section {
     height: 98vh;
     overflow-y: scroll;
 }
 
-li{
+li {
     margin-bottom: 6px;
 }
 
-li > code{
+li>code {
     padding: 6px 8px;
     font-size: 1.2em;
 }
@@ -30,7 +30,7 @@ input[type="text"] {
     justify-content: flex-end;
     align-items: center;
     margin-top: 6px;
-    position: sticky; 
+    position: sticky;
     top: 30px;
 }
 
@@ -83,11 +83,13 @@ fieldset {
     transition: all .2s ease-in-out .65s
 }
 
-input[type="search"]:focus, input[type="search"]:hover {
+input[type="search"]:focus,
+input[type="search"]:hover {
     width: calc(100% - 35px);
     transition: width .3s ease-out
 }
-input[type="search"]:focus .pesquisa{
+
+input[type="search"]:focus .pesquisa {
     width: calc(100% - 35px);
 }
 
