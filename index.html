@@ -81,48 +81,83 @@
             </form>
         </div>
     </header>
-    <section data-section="config">
-        <header class="config-inicio">
-            <h1 data-titulo data-trad="titulo">CONFIGURAÇÕES DE USUÁRIO - <a
-                    href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json"
-                    target="_blank">CONFIG.JSON</a></h1>
-            <button data-btn="comecar" data-trad="comecar">
-                Editar arquivo existente
-                <i class="material-symbols-outlined"> edit </i>
-            </button>
-            <button data-btn="novo" data-trad="novo">
-                Criar um novo arquivo
-                <i class="material-symbols-outlined"> add </i>
-            </button> <br>
-            <small data-texto data-trad="texto">Selecione o arquivo <code>config.json</code></small>
+    <dialog>
+        <header title="Select the file you would like to edit.
+Seleccione el archivo que desea editar.">
+            Selecione o arquivo que você gostaria de editar.
         </header>
-        <script type="module" src="./src/scripts/MDParaHTML.js"></script>
-        <main>
-            <header class="config">
-                <label class="pesquisa display-none">
-                    <i class="material-symbols-outlined">search</i>
-                    <input type="search" data-pesquisa placeholder="pesquisar...">
+        <menu>
+            <div>
+                <label>
+                    <input type="radio" value="config" name="arquivo" checked>
+                    <code>config.json</code>
                 </label>
-            </header>
-            <div class="display-none" data-divJson>
-                <pre><code data-json></code></pre>
+                <label>
+                    <input type="radio" value="APIS" name="arquivo">
+                    <code>APIS.json</code>
+                </label>
             </div>
-        </main>
-        <footer class="display-none" data-footer>
-            <button data-btn="salvar" data-trad="salvar">
-                Salvar
-                <i class="material-symbols-outlined"> save </i>
-            </button><br>
-            <button data-btn="copiar" data-trad="copiar" class="display-none">
-                Copiar para area de transferência
-                <i class="material-symbols-outlined"> file_copy </i>
-            </button><br>
-            <small data-textofinal data-trad="textoFinal">
-                <i class="material-symbols-outlined"> info </i>
-                Nao se esqueça de fazer um backup do arquivo original.
-            </small>
-        </footer>
-    </section>
+            <button data-btn="avancar">
+                <i class="material-symbols-outlined">navigate_next</i>
+            </button>
+        </menu>
+        <div class="display-none">
+            <div class="lds-hourglass"></div>
+        </div>
+    </dialog>
+    <script>
+        document.querySelector('dialog').showModal()
+    </script>
+    <main>
+        <section data-section="config">
+            <header>
+                <h1 data-titulo data-trad="titulo">CONFIGURAÇÕES DE USUÁRIO - <a
+                        href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json"
+                        target="_blank">CONFIG.JSON</a></h1>
+                <button data-btn="comecar" data-trad="comecar">
+                    Editar arquivo existente
+                    <i class="material-symbols-outlined"> edit </i>
+                </button>
+                <button data-btn="novo" data-trad="novo">
+                    Criar um novo arquivo
+                    <i class="material-symbols-outlined"> add </i>
+                </button> <br>
+                <small data-texto data-trad="texto">Selecione o arquivo <code>config.json</code></small>
+            </header>
+            <script type="module" src="./src/scripts/MDParaHTML.js"></script>
+            <section data-main>
+                <header class="config">
+                    <label class="pesquisa display-none">
+                        <i class="material-symbols-outlined">search</i>
+                        <input type="search" data-pesquisa placeholder="pesquisar...">
+                    </label>
+                </header>
+                <div class="display-none" data-divJson>
+                    <pre><code data-json></code></pre>
+                </div>
+            </section>
+            <footer class="display-none" data-footer>
+                <div>
+                    <button data-btn="salvar" data-trad="salvar">
+                        Salvar
+                        <i class="material-symbols-outlined"> save </i>
+                    </button>
+                    <button data-btn="copiar" data-trad="copiar" class="display-none">
+                        Copiar para area de transferência
+                        <i class="material-symbols-outlined"> file_copy </i>
+                    </button>
+                    <button data-btn="editarOutro" data-trad="editarOutro">
+                        Editar outro arquivo
+                        <i class="material-symbols-outlined"> edit </i>
+                    </button>
+                </div>
+                <small data-textofinal data-trad="textoFinal">
+                    <i class="material-symbols-outlined"> info </i>
+                    Nao se esqueça de fazer um backup do arquivo original.
+                </small>
+            </footer>
+        </section>
+    </main>
     <div class="div-aviso" data-aviso></div>
     <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
     <script type="module" src="./src/scripts/main.js"></script>

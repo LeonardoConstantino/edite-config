@@ -28,12 +28,11 @@ const criaHTML = async () => {
     dFrag = null
 
     details.forEach(dtl => {
-        const contemConfg = dtl.children[1].firstChild.textContent.toLocaleLowerCase().includes(
-            "config.json")
-        if (contemConfg) {
+        const contemConfig = dtl.children[1].firstChild.textContent.toLocaleLowerCase().includes("config.json")
+        if (contemConfig) {
             const div = document.createElement("div")
             const blockquotes = Array.from(dtl.querySelectorAll("blockquote"))
-            const main = document.querySelector("main")
+            const main = document.querySelector('[data-main]')
             div.setAttribute("data-div", "")
             div.setAttribute("class", "display-none")
             main.appendChild(div)

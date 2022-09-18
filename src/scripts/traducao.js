@@ -126,6 +126,11 @@ export const traduzir = (lingua) => {
             en: `Copy to clipboard <i class="material-symbols-outlined"> file_copy </i>`,
             es: `Copiar al portapapeles <i class="material-symbols-outlined"> file_copy </i>`
         },
+        editarOutro: {
+            pt: `Editar outro arquivo <i class="material-symbols-outlined"> edit </i>`,
+            en: `Edit another file <i class="material-symbols-outlined"> file_copy </i>`,
+            es: `Editar otro archivo <i class="material-symbols-outlined"> file_copy </i>`
+        },
     }
     const body = document.querySelector('body')
     textos.forEach(texto => {

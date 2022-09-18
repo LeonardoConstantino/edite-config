@@ -21,18 +21,20 @@ const comecar = document.querySelector('[data-btn="comecar"]')
 const novo = document.querySelector('[data-btn="novo"]')
 const salvar = document.querySelector('[data-btn="salvar"]')
 const copiar = document.querySelector('[data-btn="copiar"]')
+const avancar = document.querySelector('[data-btn="avancar"]')
+const editarOutro = document.querySelector('[data-btn="editarOutro"]')
 const div = document.querySelector('[data-div]')
 const footer = document.querySelector('[data-footer]')
 const themeForm = document.getElementById('theme-form')
 const inputPesquisa = document.querySelector('[data-pesquisa]')
 const lingua = document.querySelector('[data-lingua]')
 let novoArquivo = {}
-let fileHandle;
+let fileHandle
 let abreArquivo
 let salvaComo
 let editandoArquivoNovo = false
 
-const editar = async () => {
+const editarConfig = async () => {
     let arquivo
 
     window.scrollTo({
@@ -230,15 +232,15 @@ const mudarLingua = async () => {
     const details = Array.from(dFrag.querySelectorAll("details"))
     dFrag = null
     const filtraDetailsComConfig = dtl => {
-        const contemConfg = dtl.children[1].firstChild.textContent.toLocaleLowerCase().includes("config.json")
-        return contemConfg
+        const contemConfig = dtl.children[1].firstChild.textContent.toLocaleLowerCase().includes("config.json")
+        return contemConfig
     }
-    const [detailsConfg] = details.filter(filtraDetailsComConfig)
+    const [detailsConfig] = details.filter(filtraDetailsComConfig)
 
-    const ulsNovas = Array.from(detailsConfg.querySelectorAll("ul"))
+    const ulsNovas = Array.from(detailsConfig.querySelectorAll("ul"))
 
     document.querySelector("p").innerHTML =
-        detailsConfg.querySelectorAll("blockquote")[0].querySelector("p").innerHTML
+        detailsConfig.querySelectorAll("blockquote")[0].querySelector("p").innerHTML
     const mudaLinguaEmCadaUl = (ul, i) => {
         uls[i].innerHTML = ul.innerHTML
     }
@@ -270,7 +272,7 @@ const copiarEMostrarConteudoCopiado = (novoArquivo) => {
 const editarNovoArquivo = () => {
     editandoArquivoNovo = true
 
-    editar()
+    editarConfig()
 
     window.scrollTo({
         top: sectionConfig.offsetTop,
@@ -294,9 +296,27 @@ const mostraBktQueContemTermoPesquisado = (e) => {
     uls.forEach(mostrarSomenteTermosPesquisados)
 }
 
+const fecharModal = ele => {
+    const modal = document.querySelector('dialog')
+    ele.parentElement.classList.add("display-none")
+    ele.parentElement.nextElementSibling.classList.remove("display-none")
+    setTimeout(()=>{
+        modal.close()
+        modal.classList.add("display-none")
+    },1500)
+}
+
 inputPesquisa.addEventListener('input', mostraBktQueContemTermoPesquisado)
 
-comecar.addEventListener('click', editar)
+avancar.addEventListener('click', ()=>{
+    fecharModal(avancar)
+})
+
+editarOutro.addEventListener('click', ()=>{
+    document.location.reload()
+})
+
+comecar.addEventListener('click', editarConfig)
 
 novo.addEventListener('click', editarNovoArquivo)
 
