@@ -298,6 +298,7 @@ const editarNovoArquivo = () => {
 }
 
 const mostraBktQueContemTermoPesquisado = (e) => {
+    const uls = Array.from(document.querySelectorAll("ul"))
     const mostrarSomenteTermosPesquisados = (item) => {
         const blockquote = item.parentElement
         const key = item.children[0].firstChild.textContent.toLowerCase()
