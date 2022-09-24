@@ -12,22 +12,29 @@ import {
 
 import {
     buscarDados,
-    MDparaHTMLConvertido
+    MDparaHTMLConvertido,
+    criaHTML
 } from './MDParaHTML.js'
 
-const uls = Array.from(document.querySelectorAll("ul"))
+const main = document.querySelector("main")
+// const uls = Array.from(document.querySelectorAll("ul"))
 const sectionConfig = document.querySelector('[data-section="config"]')
+const sectionAPIS = document.querySelector('[data-section="APIS"]')
 const comecar = document.querySelector('[data-btn="comecar"]')
+const modal = document.querySelector('[data-dialog="opcoes"]')
+const opcoes = document.querySelector('[data-btn="opcoes"]')
+const fecharOpcoes = document.querySelector('[data-btn="fecharOpcoes"]')
 const novo = document.querySelector('[data-btn="novo"]')
 const salvar = document.querySelector('[data-btn="salvar"]')
 const copiar = document.querySelector('[data-btn="copiar"]')
 const avancar = document.querySelector('[data-btn="avancar"]')
 const editarOutro = document.querySelector('[data-btn="editarOutro"]')
-const div = document.querySelector('[data-div]')
+// const div = document.querySelector('[data-div]')
 const footer = document.querySelector('[data-footer]')
 const themeForm = document.getElementById('theme-form')
 const inputPesquisa = document.querySelector('[data-pesquisa]')
 const lingua = document.querySelector('[data-lingua]')
+const escolhaDeArquivo = document.querySelector('[data-arquivo]')
 let novoArquivo = {}
 let fileHandle
 let abreArquivo
@@ -57,17 +64,22 @@ const editarConfig = async () => {
     }
 
     try {
+        const div = document.querySelector('[data-div]')
+        // console.log(div);
         div.classList.remove("display-none")
         footer.classList.remove("display-none")
         inputPesquisa.parentElement.classList.remove("display-none")
         comecar.classList.add("display-none")
         novo.classList.add("display-none")
+        main.classList.add("scroll")
 
         mensagem("ateOFinal")
 
         novoArquivo = {
             ...arquivo
         }
+
+        const uls = Array.from(document.querySelectorAll("ul"))
 
         const criaInputParaCadaKey = ul => {
             const input = document.createElement("input")
@@ -132,11 +144,14 @@ const editarConfig = async () => {
             if (type === "object") setInput("object")
             if (type === "boolean") setInput("boolean")
         }
+        // console.log(criaInputParaCadaKey);
+
 
         uls.forEach(criaInputParaCadaKey)
 
     } catch (e) {
-        mensagem("naoCarregaArquivos")
+        // mensagem("naoCarregaArquivos")
+        // console.log(e);
     }
 }
 
@@ -238,6 +253,7 @@ const mudarLingua = async () => {
     const [detailsConfig] = details.filter(filtraDetailsComConfig)
 
     const ulsNovas = Array.from(detailsConfig.querySelectorAll("ul"))
+    const uls = Array.from(document.querySelectorAll("ul"))
 
     document.querySelector("p").innerHTML =
         detailsConfig.querySelectorAll("blockquote")[0].querySelector("p").innerHTML
@@ -254,6 +270,7 @@ const mudarLingua = async () => {
 }
 
 const copiarEMostrarConteudoCopiado = (novoArquivo) => {
+    const div = document.querySelector('[data-div]')
     const jsonConteiner = document.querySelector('[data-json]')
     const divJson = document.querySelector('[data-divJson]')
     const novoArquivoJson = JSON.stringify(novoArquivo, null, "\t")
@@ -297,7 +314,7 @@ const mostraBktQueContemTermoPesquisado = (e) => {
 }
 
 const fecharModal = ele => {
-    const modal = document.querySelector('dialog')
+    const modal = document.querySelector('[data-dialog="arquivo"]')
     ele.parentElement.classList.add("display-none")
     ele.parentElement.nextElementSibling.classList.remove("display-none")
     setTimeout(()=>{
@@ -310,6 +327,14 @@ inputPesquisa.addEventListener('input', mostraBktQueContemTermoPesquisado)
 
 avancar.addEventListener('click', ()=>{
     fecharModal(avancar)
+    const arquivoSelecionado =
+        escolhaDeArquivo.querySelector('input[name="arquivo"]:checked').value
+    if(arquivoSelecionado === "APIS.json"){
+        sectionConfig.classList.add("display-none")
+        sectionAPIS.classList.remove("display-none")
+        
+    }
+    // criaHTML()
 })
 
 editarOutro.addEventListener('click', ()=>{
@@ -331,3 +356,14 @@ copiar.addEventListener('click', () => {
 themeForm.addEventListener('change', updateTheme)
 
 lingua.addEventListener('change', mudarLingua)
+
+opcoes.addEventListener('click', ()=>{
+    modal.showModal()
+    modal.classList.remove("display-none")
+})
+fecharOpcoes.addEventListener('click', ()=>{
+    modal.close()
+    modal.classList.add("display-none")
+})
+
+avancar.click()

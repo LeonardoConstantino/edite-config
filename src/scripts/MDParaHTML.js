@@ -18,21 +18,27 @@ export const MDparaHTMLConvertido = async (url) => {
     return novohtml
 }
 
-const criaHTML = async () => {
+export const criaHTML = async () => {
     let dFrag = document.createDocumentFragment()
     const html = await MDparaHTMLConvertido(url)
-    const div = document.createElement("div")
-    div.innerHTML = html
-    dFrag.appendChild(div)
+    const divConteiner = document.createElement("div")
+    divConteiner.innerHTML = html
+    dFrag.appendChild(divConteiner)
     const details = Array.from(dFrag.querySelectorAll("details"))
     dFrag = null
 
+    // console.log(details[1]);
+    const escolhaDeArquivo = document.querySelector('[data-arquivo]')
+    const arquivoSelecionado =
+        escolhaDeArquivo.querySelector('input[name="arquivo"]:checked').value
+
     details.forEach(dtl => {
-        const contemConfig = dtl.children[1].firstChild.textContent.toLocaleLowerCase().includes("config.json")
-        if (contemConfig) {
+        const detailsSelecionado =
+            dtl.children[1].firstChild.textContent.toLocaleLowerCase()
+        if (detailsSelecionado.includes(arquivoSelecionado)) {
             const div = document.createElement("div")
             const blockquotes = Array.from(dtl.querySelectorAll("blockquote"))
-            const main = document.querySelector('[data-main]')
+            const main = document.querySelector('[data-main="config"]')
             div.setAttribute("data-div", "")
             div.setAttribute("class", "display-none")
             main.appendChild(div)
@@ -40,6 +46,12 @@ const criaHTML = async () => {
                 div.appendChild(bkt)
             })
         }
+
+        if (arquivoSelecionado === "APIS.json") {
+            return
+        }
     })
 }
-criaHTML()
+// criaHTML()
+
+document.querySelector('[data-btn="avancar"]').addEventListener('click', criaHTML)

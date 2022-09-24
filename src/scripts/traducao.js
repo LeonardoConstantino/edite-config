@@ -94,6 +94,17 @@ export const traduzir = (lingua) => {
             en: `USER SETTINGS - <a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json" target="_blank">CONFIG.JSON</a>`,
             es: `AJUSTES DE USUARIO - <a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json" target="_blank">CONFIG.JSON</a>`
         },
+        tituloAPIS: {
+            pt: `CONFIGURAÇÕES DE APIS - <a
+            href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/APIS.json"
+            target="_blank">APIS.json</a>`,
+            en: `API SETTINGS - <a
+            href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/APIS.json"
+            target="_blank">APIS.json</a>`,
+            es: `CONFIGURACIÓN DE LA API - <a
+            href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/APIS.json"
+            target="_blank">APIS.json</a>`
+        },
         comecar: {
             pt: `Editar arquivo existente <i class="material-symbols-outlined"> edit </i>`,
             en: `Edit existing file <i class="material-symbols-outlined"> edit </i>`,
@@ -108,6 +119,11 @@ export const traduzir = (lingua) => {
             pt: `Selecione o arquivo <code>config.json</code>`,
             en: `Select the file <code>config.json</code>`,
             es: `Seleccione el archivo <code>config.json</code>`
+        },
+        textoAPIS: {
+            pt: `Selecione o arquivo <code>APIS.json</code>`,
+            en: `Select the file <code>APIS.json</code>`,
+            es: `Seleccione el archivo <code>APIS.json</code>`
         },
         salvar: {
             pt: `Salvar <i class="material-symbols-outlined"> save </i>`,

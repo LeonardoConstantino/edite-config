@@ -1,4 +1,4 @@
-main {
+.scroll {
     height: 98vh;
     overflow-y: scroll;
 }
