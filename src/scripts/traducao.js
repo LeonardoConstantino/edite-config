@@ -1,3 +1,7 @@
+import {
+    MDparaHTMLConvertido,
+} from './MDParaHTML.js'
+
 export const mensagem = (key) => {
     const formeLingua = document.querySelector('[data-lingua]')
     const linguaSelecionada = formeLingua.querySelector('input[name="lingua"]:checked').value
@@ -90,6 +94,11 @@ export const traduzir = (lingua) => {
             es: "Tema ligero"
         },
         titulo: {
+            pt: "Projeto Íris",
+            en: "Iris Project",
+            es: "Proyecto Iris"
+        },
+        tituloConfig: {
             pt: `CONFIGURAÇÕES DE USUÁRIO - <a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json" target="_blank">CONFIG.JSON</a>`,
             en: `USER SETTINGS - <a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json" target="_blank">CONFIG.JSON</a>`,
             es: `AJUSTES DE USUARIO - <a href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json" target="_blank">CONFIG.JSON</a>`
@@ -155,4 +164,61 @@ export const traduzir = (lingua) => {
     })
     body.setAttribute("lang", lingua === "pt" ? "pt-br" : lingua)
 
+}
+
+export const mudarLingua = async () => {
+    const lingua = document.querySelector('[data-lingua]')
+    const linguaSelecionada = lingua.querySelector('input[name="lingua"]:checked').value
+
+    const novaUrl = `https://raw.githubusercontent.com/KillovSky/iris/main/.readme/${linguaSelecionada}/config.md`
+    let dFrag = document.createDocumentFragment()
+    const html = await MDparaHTMLConvertido(novaUrl)
+    const div = document.createElement("div")
+    div.innerHTML = html
+    dFrag.appendChild(div)
+
+    const details = Array.from(dFrag.querySelectorAll("details"))
+    dFrag = null
+    // const filtraDetailsComConfig = dtl => {
+    //     const contemConfig = dtl.children[1].firstChild.textContent.toLocaleLowerCase().includes("config.json")
+    //     return contemConfig
+    // }
+    // const [detailsConfig] = details.filter(filtraDetailsComConfig)
+
+    const escolhaDeArquivo = document.querySelector('[data-arquivo]')
+    const arquivoSelecionado =
+        escolhaDeArquivo.querySelector('input[name="arquivo"]:checked')
+            .value
+            .toLocaleLowerCase()
+
+    const filtraDetails = (arg)=>{
+        return details.filter(dtl => 
+            dtl
+            .children[1]
+            .firstChild
+            .textContent
+            .toLocaleLowerCase()
+            .includes(arg.toLocaleLowerCase())
+        )[0]
+    }
+
+    const detailfiltrado = filtraDetails(arquivoSelecionado)
+
+    const ulsNovas = Array.from(detailfiltrado.querySelectorAll("ul"))
+    const uls = Array.from(document.querySelectorAll("ul"))
+
+    document.querySelector("p").innerHTML =
+        detailfiltrado.querySelectorAll("blockquote")[0].querySelector("p").innerHTML
+    const mudaLinguaEmCadaUl = (ul, i) => {
+        // console.log("antiga -->",uls[i],"nova -->", ul);
+        if(!uls[i]) return
+        uls[i].innerHTML = ul.innerHTML
+    }
+    ulsNovas.forEach(mudaLinguaEmCadaUl)
+
+    if (linguaSelecionada === "pt") traduzir("pt")
+    if (linguaSelecionada === "en") traduzir("en")
+    if (linguaSelecionada === "es") traduzir("es")
+
+    mensagem("idiomaAlterado")
 }

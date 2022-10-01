@@ -32,9 +32,16 @@
 </head>
 
 <body>
-    <button data-btn="opcoes">
-        <i class="material-symbols-outlined"> settings </i>
-    </button>
+    <header class="cabecalho">
+        <div class="logo">
+            <img src="https://user-images.githubusercontent.com/55511420/181583802-c4b698e5-1017-4323-81fd-4e7f2f43620b.jpg" width="100" height="100" alt="logo">
+
+        </div>
+        <h1 data-trad="titulo">Projeto Íris</h1>
+        <button data-btn="opcoes">
+            <i class="material-symbols-outlined"> settings </i>
+        </button>
+    </header>
     <dialog data-dialog="opcoes" class="display-none">
         <menu class="forms">
             <form id="theme-form">
@@ -95,13 +102,13 @@ Seleccione el archivo que desea editar.">
         <menu>
             <div data-arquivo>
                 <label>
-                    <input type="radio" value="config.json" name="arquivo" checked>
+                    <input type="radio" value="config.json" name="arquivo">
                     <code>config.json</code>
                 </label>
-                <!-- <label>
-                    <input type="radio" value="APIS.json" name="arquivo">
+                <label>
+                    <input type="radio" value="apis.json" name="arquivo" checked>
                     <code>APIS.json</code>
-                </label> -->
+                </label>
             </div>
             <button data-btn="avancar">
                 <i class="material-symbols-outlined">navigate_next</i>
@@ -115,11 +122,11 @@ Seleccione el archivo que desea editar.">
         document.querySelector('[data-dialog="arquivo"]').showModal()
     </script>
     <main>
-        <section data-section="config">
+        <section data-section="config.json">
             <header>
-                <h1 data-titulo data-trad="titulo">CONFIGURAÇÕES DE USUÁRIO - <a
+                <h2 data-titulo data-trad="tituloConfig">CONFIGURAÇÕES DE USUÁRIO - <a
                         href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/config.json"
-                        target="_blank">CONFIG.JSON</a></h1>
+                        target="_blank">CONFIG.JSON</a></h2>
                 <button data-btn="comecar" data-trad="comecar">
                     Editar arquivo existente
                     <i class="material-symbols-outlined"> edit </i>
@@ -130,8 +137,8 @@ Seleccione el archivo que desea editar.">
                 </button> <br>
                 <small data-texto data-trad="texto">Selecione o arquivo <code>config.json</code></small>
             </header>
-            <script type="module" src="./src/scripts/MDParaHTML.js"></script>
-            <section data-main="config">
+            <!-- <script type="module" src="./src/scripts/MDParaHTML.js"></script> -->
+            <section data-main="config.json">
                 <header class="config">
                     <label class="pesquisa display-none">
                         <i class="material-symbols-outlined">search</i>
@@ -163,11 +170,11 @@ Seleccione el archivo que desea editar.">
                 </small>
             </footer>
         </section>
-        <section data-section="APIS" class="display-none">
+        <section data-section="apis.json" class="display-none">
             <header>
-                <h1 data-titulo data-trad="tituloAPIS">CONFIGURAÇÕES DE APIS - <a
+                <h2 data-titulo data-trad="tituloAPIS">CONFIGURAÇÕES DE APIS - <a
                         href="https://github.com/KillovSky/iris/blob/main/lib/config/Settings/APIS.json"
-                        target="_blank">APIS.json</a></h1>
+                        target="_blank">APIS.json</a></h2>
                 <button data-btn="comecar" data-trad="comecar">
                     Editar arquivo existente
                     <i class="material-symbols-outlined"> edit </i>
@@ -178,8 +185,8 @@ Seleccione el archivo que desea editar.">
                 </button> <br>
                 <small data-texto data-trad="textoAPIS">Selecione o arquivo <code>APIS.json</code></small>
             </header>
-            <script type="module" src="./src/scripts/MDParaHTML.js"></script>
-            <section data-main="APIS">
+            <!-- <script type="module" src="./src/scripts/MDParaHTML.js"></script> -->
+            <section data-main="apis.json">
                 <header class="config">
                     <label class="pesquisa display-none">
                         <i class="material-symbols-outlined">search</i>
@@ -213,7 +220,9 @@ Seleccione el archivo que desea editar.">
         </section>
     </main>
     <div class="div-aviso" data-aviso></div>
+    <script type="module" src="./src/scripts/MDParaHTML.js"></script>
     <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+    <script type="module" src="./src/scripts/edite apis.js"></script>
     <script type="module" src="./src/scripts/main.js"></script>
 </body>
 

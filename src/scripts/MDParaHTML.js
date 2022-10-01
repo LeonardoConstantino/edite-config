@@ -27,28 +27,38 @@ export const criaHTML = async () => {
     const details = Array.from(dFrag.querySelectorAll("details"))
     dFrag = null
 
-    // console.log(details[1]);
+    // console.log(details[2]);
     const escolhaDeArquivo = document.querySelector('[data-arquivo]')
     const arquivoSelecionado =
-        escolhaDeArquivo.querySelector('input[name="arquivo"]:checked').value
+        escolhaDeArquivo.querySelector('input[name="arquivo"]:checked')
+            .value
+            .toLocaleLowerCase()
 
     details.forEach(dtl => {
         const detailsSelecionado =
             dtl.children[1].firstChild.textContent.toLocaleLowerCase()
+        // console.log(detailsSelecionado,"-->",arquivoSelecionado);
         if (detailsSelecionado.includes(arquivoSelecionado)) {
-            const div = document.createElement("div")
             const blockquotes = Array.from(dtl.querySelectorAll("blockquote"))
-            const main = document.querySelector('[data-main="config"]')
+            let main /*= document.querySelector(`[data-main="${arquivoSelecionado}"]`)*/
+            if(arquivoSelecionado === "config.json"){
+                main = document.querySelector(`[data-main="config.json"]`)
+                // console.log("config.json");
+            }
+            if(arquivoSelecionado === "apis.json"){
+                main = document.querySelector(`[data-main="apis.json"]`)
+                blockquotes[0].children[1].classList.add("display-none")
+                // console.log("apis.json");
+                // console.log(main);
+            }
+            const div = document.createElement("div")
             div.setAttribute("data-div", "")
-            div.setAttribute("class", "display-none")
-            main.appendChild(div)
+            // div.setAttribute("class", "display-none")
             blockquotes.forEach(bkt => {
                 div.appendChild(bkt)
             })
-        }
-
-        if (arquivoSelecionado === "APIS.json") {
-            return
+            main.appendChild(div)
+            // console.log("confg");
         }
     })
 }

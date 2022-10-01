@@ -7,19 +7,17 @@ import {
 
 import {
     mensagem,
-    traduzir
+    mudarLingua
 } from './traducao.js'
 
 import {
     buscarDados,
-    MDparaHTMLConvertido,
-    criaHTML
 } from './MDParaHTML.js'
 
 const main = document.querySelector("main")
 // const uls = Array.from(document.querySelectorAll("ul"))
-const sectionConfig = document.querySelector('[data-section="config"]')
-const sectionAPIS = document.querySelector('[data-section="APIS"]')
+const sectionConfig = document.querySelector('[data-section="config.json"]')
+const sectionAPIS = document.querySelector('[data-section="apis.json"]')
 const comecar = document.querySelector('[data-btn="comecar"]')
 const modal = document.querySelector('[data-dialog="opcoes"]')
 const opcoes = document.querySelector('[data-btn="opcoes"]')
@@ -234,40 +232,7 @@ const updateTheme = () => {
     mensagem("temaAlterado")
 }
 
-const mudarLingua = async () => {
-    const linguaSelecionada = lingua.querySelector('input[name="lingua"]:checked').value
 
-    const novaUrl = `https://raw.githubusercontent.com/KillovSky/iris/main/.readme/${linguaSelecionada}/config.md`
-    let dFrag = document.createDocumentFragment()
-    const html = await MDparaHTMLConvertido(novaUrl)
-    const div = document.createElement("div")
-    div.innerHTML = html
-    dFrag.appendChild(div)
-
-    const details = Array.from(dFrag.querySelectorAll("details"))
-    dFrag = null
-    const filtraDetailsComConfig = dtl => {
-        const contemConfig = dtl.children[1].firstChild.textContent.toLocaleLowerCase().includes("config.json")
-        return contemConfig
-    }
-    const [detailsConfig] = details.filter(filtraDetailsComConfig)
-
-    const ulsNovas = Array.from(detailsConfig.querySelectorAll("ul"))
-    const uls = Array.from(document.querySelectorAll("ul"))
-
-    document.querySelector("p").innerHTML =
-        detailsConfig.querySelectorAll("blockquote")[0].querySelector("p").innerHTML
-    const mudaLinguaEmCadaUl = (ul, i) => {
-        uls[i].innerHTML = ul.innerHTML
-    }
-    ulsNovas.forEach(mudaLinguaEmCadaUl)
-
-    if (linguaSelecionada === "pt") traduzir("pt")
-    if (linguaSelecionada === "en") traduzir("en")
-    if (linguaSelecionada === "es") traduzir("es")
-
-    mensagem("idiomaAlterado")
-}
 
 const copiarEMostrarConteudoCopiado = (novoArquivo) => {
     const div = document.querySelector('[data-div]')
@@ -298,6 +263,7 @@ const editarNovoArquivo = () => {
 }
 
 const mostraBktQueContemTermoPesquisado = (e) => {
+    const uls = Array.from(document.querySelectorAll("ul"))
     const mostrarSomenteTermosPesquisados = (item) => {
         const blockquote = item.parentElement
         const key = item.children[0].firstChild.textContent.toLowerCase()
@@ -329,7 +295,12 @@ avancar.addEventListener('click', ()=>{
     fecharModal(avancar)
     const arquivoSelecionado =
         escolhaDeArquivo.querySelector('input[name="arquivo"]:checked').value
-    if(arquivoSelecionado === "APIS.json"){
+    // const sections = Array.from(document.querySelectorAll(`[data-section]`))
+    // const sectionSelecionada = 
+    //     document.querySelector(`[data-section="${arquivoSelecionado}"]`)
+    // sections.forEach(section => section.classList.add("display-none"))
+    // sectionSelecionada.remove("display-none")
+    if(arquivoSelecionado === "apis.json"){
         sectionConfig.classList.add("display-none")
         sectionAPIS.classList.remove("display-none")
         
@@ -361,9 +332,10 @@ opcoes.addEventListener('click', ()=>{
     modal.showModal()
     modal.classList.remove("display-none")
 })
+
 fecharOpcoes.addEventListener('click', ()=>{
     modal.close()
     modal.classList.add("display-none")
 })
 
-avancar.click()
+// avancar.click()

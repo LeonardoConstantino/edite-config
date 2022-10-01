@@ -1,6 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
 .scroll {
     height: 98vh;
     overflow-y: scroll;
+}
+
+.cabecalho{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .8em;
+    /* background-color: aquamarine; */
+}
+
+.cabecalho img{
+    width: 100px;
+    border-radius: 6px;
+}
+
+.cabecalho h1{
+    /* font-size: max(16px, 3.2em + 1vw) */
+    font-size: min(3em, 10vw);
+    border-bottom: #0096bf59 solid 1px;
+}
+
+.cabecalho button{
+    width: 45px;
+    height: 45px;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+h2{
+    font-size: min(1.5em, 5vw);
 }
 
 li {
@@ -10,11 +47,6 @@ li {
 li>code {
     padding: 6px 8px;
     font-size: 1.2em;
-}
-
-h1 {
-    font-size: 1.2em;
-    text-align: center;
 }
 
 input[type="text"] {
