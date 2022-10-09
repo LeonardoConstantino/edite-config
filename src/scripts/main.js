@@ -96,9 +96,17 @@ const editarConfig = async () => {
                 ul.insertAdjacentElement("afterend", input)
 
                 const atualizaValorNoArquivo = (e) => {
-                    const novoValor = e.target.value
-                    const valueConvert = tipo === "number" ? +novoValor : novoValor
-                    novoArquivo[key] = valueConvert
+                    let novoValor = e.target.value
+                    // let arr = []
+                    if(tipo === "number") novoValor= +novoValor
+                    if(tipo === "object") novoValor= novoValor.split(",")
+                    // if(tipo === "object") novoValor= `[${novoValor}]`
+                    // if(tipo === "object") {
+                    //     arr.push(e.target.value.split(","))
+                    //     novoValor= arr
+                    // }
+                    // const valueConvert = tipo === "number" ? +novoValor : novoValor
+                    novoArquivo[key] = novoValor
                 }
 
                 input.addEventListener("change", atualizaValorNoArquivo)
@@ -148,7 +156,7 @@ const editarConfig = async () => {
         uls.forEach(criaInputParaCadaKey)
 
     } catch (e) {
-        // mensagem("naoCarregaArquivos")
+        mensagem("naoCarregaArquivos")
         // console.log(e);
     }
 }
@@ -338,4 +346,4 @@ fecharOpcoes.addEventListener('click', ()=>{
     modal.classList.add("display-none")
 })
 
-// avancar.click()
+avancar.click()

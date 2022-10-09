@@ -1,1 +1,1 @@
-console.log("ola");
+console.log("Ola forasteiro explorador!");

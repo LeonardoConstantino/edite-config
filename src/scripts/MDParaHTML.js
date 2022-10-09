@@ -53,7 +53,7 @@ export const criaHTML = async () => {
             }
             const div = document.createElement("div")
             div.setAttribute("data-div", "")
-            // div.setAttribute("class", "display-none")
+            div.setAttribute("class", "display-none")
             blockquotes.forEach(bkt => {
                 div.appendChild(bkt)
             })
