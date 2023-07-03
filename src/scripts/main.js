@@ -3,7 +3,7 @@ import {
     supported,
     /*directoryOpen,
     fileSave,*/
-} from 'https://unpkg.com/browser-fs-access'
+} from 'https://cdn.jsdelivr.net/npm/browser-fs-access@0.34.1/+esm'
 
 import {
     mensagem,
