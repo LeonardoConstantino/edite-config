@@ -53,7 +53,7 @@ const editarConfig = async () => {
         }
 
         if (editandoArquivoNovo) {
-            const arquivojson = await buscarDados("https://raw.githubusercontent.com/KillovSky/iris/main/lib/config/Settings/config.json")
+            const arquivojson = await buscarDados("https://raw.githubusercontent.com/KillovSky/Iris-OpenWA/main/lib/config/Settings/config.json")
             arquivo = await JSON.parse(arquivojson)
         }
     } catch (e) {
