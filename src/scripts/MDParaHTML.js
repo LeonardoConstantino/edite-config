@@ -1,4 +1,4 @@
-const url = `https://raw.githubusercontent.com/KillovSky/iris/main/.readme/pt/config.md`
+const url = `https://raw.githubusercontent.com/KillovSky/Iris-OpenWA/main/.readme/pt/config.md`
 
 export const buscarDados = async (url) => {
     const dados = await fetch(url)
